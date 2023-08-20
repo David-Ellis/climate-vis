@@ -29,7 +29,9 @@ def TempR(temp):
     # convert temperature into radius
     return temp + 1
 
-def setup(fig):
+def setup():
+    fig = plt.figure(figsize = (7,7))
+    
     theta = np.linspace(-np.pi/2, 8/6*np.pi, 12)
     label_x = 3.5 * np.cos(-theta)
     label_y = 3.5 * np.sin(-theta)
@@ -37,13 +39,14 @@ def setup(fig):
         plt.annotate(months[i], 
                      (label_x[i], label_y[i]), 
                      size = 16, ha='center', 
-                     va='center')
+                     va='center',
+                     rotation = -i/12*360)
         plt.axis([-4,4,-4,4])
     plt.xticks([])
     plt.yticks([])
     # plot 0, 1, 2 degree circles
     for temp in [0, 1, 2]:
-        theta = np.linspace(0, 2*np.pi, 50)
+        theta = np.linspace(0, 2*np.pi, 100)
         plt.plot(
             TempR(temp)*np.cos(theta),
             TempR(temp)*np.sin(theta),
@@ -57,6 +60,8 @@ def setup(fig):
 
     return fig
 
+setup()
+
 #%% Visualisation
 
 R = TempR(all_temps)
@@ -64,8 +69,8 @@ num_years = 144
 theta = np.linspace(-np.pi/2, num_years*8/6*np.pi, num_years*12)
 
 plt.close("all")
-fig = plt.figure(figsize = (7,7))
-fig = setup(fig)
+
+setup()
 
 year = plt.annotate(str(600//12 + 1880), (0,0), ha = "center", va = "center",
                  bbox = dict(fc="white", lw = 0), size = 16)
